@@ -43,7 +43,7 @@ services:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
   payment: 
-    image: payment:v1
+    image: naveenlingampally/payment:v1
     container_name: payment
     environment:
       CART_HOST: cart
@@ -56,6 +56,19 @@ services:
     - rabbitmq
     - user
     - cart
+  frontend:
+    image: naveenlingampally/frontend:v1
+    container_name: frontend
+    ports:
+    - "80:80"
+    depends_on:
+    - catalogue
+    - user
+    - cart
+    - shipping
+    - payment
     
+
+
 
 
