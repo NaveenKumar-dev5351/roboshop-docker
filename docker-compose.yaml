@@ -5,43 +5,57 @@ networks:
     external: true
 services:
   mongodb:
-     image: naveenlingampally/mongodb:v1
-     container_name: mongodb
+    image: naveenlingampally/mongodb:v1
+    container_name: mongodb
   catalogue:
-     image: naveenlingampally/catalogue:v1
-     container_name: catalogue
-     depends_on: 
-     - mongodb
+    image: naveenlingampally/catalogue:v1
+    container_name: catalogue
+    depends_on: 
+    - mongodb
   redis:
-     image: redis:7.0
-     container_name: redis
+    image: redis:7.0
+    container_name: redis
   user:
-     image: naveenlingampally/user:v1
-     container_name: user
-     depends_on: 
-     - redis
-     - mongodb
+    image: naveenlingampally/user:v1
+    container_name: user
+    depends_on: 
+    - redis
+    - mongodb
   cart:
-     image: naveenlingampally/cart:v1
-     container_name: cart
-     depends_on: 
-     - catalogue
-     - redis
+    image: naveenlingampally/cart:v1
+    container_name: cart
+    depends_on: 
+    - catalogue
+    - redis
   mysql:
-     image: naveenlingampally/mysql:v1
-     container_name: mysql
+    image: naveenlingampally/mysql:v1
+    container_name: mysql
   shipping:
-     image: naveenlingampally/shipping:v1
-     container_name: shipping
-     depends_on: 
-     - mysql
-     - cart
+    image: naveenlingampally/shipping:v1
+    container_name: shipping
+    depends_on: 
+    - mysql
+    - cart
   rabbitmq:
-     image: rabbitmq:3
-     container_name: rabbitmq
-     environment:
-       RABBITMQ_DEFAULT_USER: roboshop
-       RABBITMQ_DEFAULT_PASS: roboshop123
+    image: rabbitmq:3
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: roboshop
+      RABBITMQ_DEFAULT_PASS: roboshop123
   payment: 
-     image: 
+    image: payment:v1
+    container_name: payment
+    environment:
+      CART_HOST: cart
+      CART_PORT: 8080
+      USER_HOST: user
+      USER_PORT: 8080
+      AMQP_HOST: rabbitmq
+      AMQP_PASS: roboshop123
+    depends_on:
+    - rabbitmq
+    - user
+    - cart
+    
+
 
