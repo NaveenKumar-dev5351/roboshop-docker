@@ -164,6 +164,28 @@ docker compose version
 ```
 
 ### Quick Start
+## 🔗 Service Dependencies
+mongodb ←── catalogue
+mongodb ←── user ←── redis
+redis   ←── cart ←── catalogue
+mysql   ←── shipping ←── cart
+rabbitmq ←── payment ←── user, cart
+frontend ←── all services
+
+## 🌐 Docker Network
+All services communicate through custom bridge 
+network named `roboshop`. Only frontend exposes 
+port 80 externally — all other services are 
+internal only for security.
+
+## 💾 Persistent Volumes
+| Volume | Service | Data |
+|---|---|---|
+| mongodb | MongoDB | Product catalogue data |
+| mysql | MySQL | User and order data |
+| redis | Redis | Session cache |
+| rabbitmq | RabbitMQ | Message queue data |
+
 ```bash
 # Clone repository
 git clone https://github.com/NaveenKumar-dev5351/roboshop-docker.git
