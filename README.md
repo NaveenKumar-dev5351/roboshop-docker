@@ -148,3 +148,102 @@ roboshop-docker/
 │   └── Dockerfile          # MySQL with schema
 └── frontend/
 └── Dockerfile          # Nginx configuration
+## 🚀 How to Run
+
+### Prerequisites
+```bash
+# Install Docker
+curl -fsSL https://get.docker.com | sh
+
+# Install Docker Compose
+sudo apt install docker-compose-plugin
+
+# Verify installation
+docker --version
+docker compose version
+```
+
+### Quick Start
+```bash
+# Clone repository
+git clone https://github.com/NaveenKumar-dev5351/roboshop-docker.git
+cd roboshop-docker
+
+# Start all services
+docker compose up -d
+
+# Check all containers running
+docker compose ps
+
+# View logs
+docker compose logs -f
+
+# Access application
+open http://localhost
+```
+
+### Useful Commands
+```bash
+# Build specific service
+docker compose build catalogue
+
+# Restart specific service
+docker compose restart payment
+
+# View service logs
+docker compose logs -f shipping
+
+# Check resource usage
+docker stats
+
+# Stop all services
+docker compose down
+
+# Stop and remove volumes
+docker compose down -v
+```
+
+## 🔍 Verify Services Running
+```bash
+# Check all containers
+docker compose ps
+
+# Expected output:
+# catalogue    running   0.0.0.0:8080->8080/tcp
+# user         running   0.0.0.0:8081->8080/tcp
+# cart         running   0.0.0.0:8082->8080/tcp
+# payment      running   0.0.0.0:8083->8080/tcp
+# shipping     running   0.0.0.0:8084->8080/tcp
+# frontend     running   0.0.0.0:80->80/tcp
+# mongodb      running   27017/tcp
+# mysql        running   3306/tcp
+```
+
+## 🔧 Common Issues & Solutions
+
+| Issue | Cause | Solution |
+|---|---|---|
+| Port already in use | Another service using port | `docker compose down` then restart |
+| Container not starting | Check logs | `docker compose logs service-name` |
+| DB connection failed | DB not ready | Add `depends_on` with health check |
+| Out of memory | Docker memory limit | Increase Docker memory to 4GB+ |
+| Image pull failed | Network issue | `docker pull` individually |
+
+## 📈 Image Size Comparison
+
+| Service | Single Stage | Multi-Stage | Reduction |
+|---|---|---|---|
+| Catalogue | ~950MB | ~180MB | ~81% |
+| User | ~950MB | ~180MB | ~81% |
+| Cart | ~950MB | ~180MB | ~81% |
+| Payment | ~920MB | ~50MB | ~95% |
+
+## 🔗 Related Projects
+- [Roboshop AWS Infrastructure](https://github.com/NaveenKumar-dev5351/roboshop-aws-infrastructure)
+- [Roboshop Ansible](https://github.com/NaveenKumar-dev5351/ansible-roboshop)
+- [Roboshop Shell](https://github.com/NaveenKumar-dev5351/shell-roboshop)
+
+## 👨‍💻 Author
+**Naveen Kumar Lingampelly**
+DevOps Engineer | [LinkedIn](https://linkedin.com/in/naveenlingampelli) | 
+[GitHub](https://github.com/NaveenKumar-dev5351)
